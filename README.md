@@ -120,3 +120,4 @@ Ouvrir `/android` dans Android Studio → Run.
 | A08 | Intégrité | Lock files committés, SRI pour ressources statiques |
 | A09 | Journalisation | Logs JSON structurés, traçabilité CRUD, alertes |
 | A10 | SSRF | Aucune URL utilisateur sans validation, liste blanche |
+| A11 | test
