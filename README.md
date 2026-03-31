@@ -41,7 +41,6 @@ Voici les comptes de test utilisables pour la connexion à l'application :
 # Installation des dépendances
 npm install
 
-
 # Configuration des variables d'environnement (environnement)
 cp .env.example .env.local
 
@@ -53,7 +52,8 @@ npx prisma db seed
 
 # Lancement du serveur de développement
 npm run dev
-```
+```git commit --amend
+git push --force origin branch-name
 
 ### Erreur possible :
 `destination` does not start with `/`, `http://`, or `https://` for route {"source":"/api/backend/:path*","destination":"undefined/:path*"} 
