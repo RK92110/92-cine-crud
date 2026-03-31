@@ -1,0 +1,138 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+enum Role {
+  ADHERENT_ADULTE
+  ADHERENT_MINEUR
+  INSTRUCTEUR_FILM
+  ANIMATEUR_CINE
+  ADMIN
+}
+
+enum StatutSeance {
+  PLANIFIEE
+  EN_COURS
+  TERMINEE
+  ANNULEE
+}
+
+enum TypeSeance {
+  PROJECTION
+  AVANT_PREMIERE
+  REPRISE
+  ATELIER_CINEMA
+  CINE_DEBAT
+}
+
+enum StatutQuotient {
+  PENDING
+  VALIDATED
+  REFUSED
+}
+
+enum ClassificationFilm {
+  TOUS_PUBLICS
+  MOINS_10
+  MOINS_12
+  MOINS_16
+  MOINS_18
+}
+
+enum VersionFilm {
+  VF
+  VO
+  VOST
+  VFST
+}
+
+model User {
+  id               Int            @id @default(autoincrement())
+  email            String         @unique
+  name             String
+  role             Role
+  passwordHash     String
+  quotientFamilial Float?
+  quotientStatut   StatutQuotient @default(PENDING)
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  sessions         Session[]      @relation("InstructeurSessions")
+  inscriptions     Inscription[]
+  profilsEnfants   ProfilEnfant[]
+}
+
+model Film {
+  id             Int                @id @default(autoincrement())
+  titre          String
+  synopsis       String?
+  realisateur    String
+  annee          Int?
+  duree          Int                // en minutes
+  genre          String
+  classification ClassificationFilm @default(TOUS_PUBLICS)
+  version        VersionFilm        @default(VF)
+  affiche        String?            // URL ou chemin
+  disponible     Boolean            @default(true)
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+  seances        Session[]
+}
+
+model Session {
+  id           Int          @id @default(autoincrement())
+  type         TypeSeance
+  filmId       Int
+  film         Film         @relation(fields: [filmId], references: [id])
+  titre        String?      // titre alternatif (ex: "Avant-première Dune")
+  description  String?
+  date         DateTime
+  duree        Int          // en minutes (peut différer de film.duree pour ateliers)
+  salleId      Int?
+  salle        Salle?       @relation(fields: [salleId], references: [id])
+  instructeurId Int?
+  instructeur  User?        @relation("InstructeurSessions", fields: [instructeurId], references: [id])
+  capaciteMax  Int?
+  statut       StatutSeance @default(PLANIFIEE)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  inscriptions Inscription[]
+}
+
+model Inscription {
+  id          Int          @id @default(autoincrement())
+  userId      Int
+  user        User         @relation(fields: [userId], references: [id])
+  sessionId   Int
+  session     Session      @relation(fields: [sessionId], references: [id])
+  enfantId    Int?
+  enfant      ProfilEnfant? @relation(fields: [enfantId], references: [id])
+  createdAt   DateTime     @default(now())
+
+  @@unique([userId, sessionId])
+}
+
+model Salle {
+  id          Int       @id @default(autoincrement())
+  name        String
+  cinema      String    // nom de l'établissement (ex: "Ciné 92 Nanterre")
+  capacity    Int
+  type        String    // Standard, IMAX, 4DX, Dolby Atmos, PMR
+  disponible  Boolean   @default(true)
+  sessions    Session[]
+}
+
+model ProfilEnfant {
+  id             Int           @id @default(autoincrement())
+  nom            String
+  prenom         String
+  dateNaissance  DateTime
+  parentId       Int
+  parent         User          @relation(fields: [parentId], references: [id])
+  heuresMois     Float         @default(0)  // heures de visionnage ce mois
+  inscriptions   Inscription[]
+}

@@ -1,0 +1,43 @@
+﻿
+> 92cine@0.1.0 build
+> next build --turbopack
+
+   Ôû▓ Next.js 15.5.5 (Turbopack)
+   - Environments: .env
+
+   Creating an optimized production build ...
+ Ô£ô Finished writing to disk in 162ms
+ Ô£ô Compiled successfully in 3.3s
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/14) ...
+   Generating static pages (3/14) 
+   Generating static pages (6/14) 
+   Generating static pages (10/14) 
+ Ô£ô Generating static pages (14/14)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                         Size  First Load JS
+Ôöî Ôùï /                                0 B         119 kB
+Ôö£ Ôùï /_not-found                      0 B         119 kB
+Ôö£ Ôùï /admin/dashboard                 0 B         119 kB
+Ôö£ Ôùï /animateur/mes-activites         0 B         119 kB
+Ôö£ Ôùï /auth/login                   1.2 kB         120 kB
+Ôö£ Ôùï /auth/signup                     0 B         119 kB
+Ôö£ Ôùï /films                           0 B         119 kB
+Ôö£ Ôùï /instructeur/mes-seances         0 B         119 kB
+Ôö£ Ôùï /mon-espace                      0 B         119 kB
+Ôö£ Ôùï /salles                          0 B         119 kB
+Ôöö Ôùï /seances                         0 B         119 kB
++ First Load JS shared by all     125 kB
+  Ôö£ chunks/569f8ca39997ccda.js   21.7 kB
+  Ôö£ chunks/8082ab48faca5ea1.js   17.2 kB
+  Ôöö chunks/86fdc11209c7a199.js   59.2 kB
+  Ôöö other shared chunks (total)  26.9 kB
+
+
+ãÆ Middleware                     39.2 kB
+
+Ôùï  (Static)  prerendered as static content
+
