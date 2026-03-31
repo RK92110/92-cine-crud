@@ -41,7 +41,8 @@ Voici les comptes de test utilisables pour la connexion à l'application :
 # Installation des dépendances
 npm install
 
-# Configuration des variables d'environnement
+
+# Configuration des variables d'environnement (environnement)
 cp .env.example .env.local
 
 # Synchronisation de la base SQLite locale
